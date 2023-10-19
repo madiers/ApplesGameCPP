@@ -21,11 +21,14 @@ const int NUM_APPLES{ 20 };
 const float APPLE_SIZE{ 20.f };
 
 
+// Obstacles
+const int NUM_OBSTACLES{ 5 };
+
 
 
 int main()
 {
-	//Initialization
+	// Window Initialization
 
 
 	int seed = (int)time(nullptr);
@@ -36,8 +39,7 @@ int main()
 
 	do
 	{
-		//Initialization
-
+		// Player Initialization
 		float playerX{ SCREEN_WIDTH / 2.f };
 		float playerY{ SCRENN_HEIGHT / 2.f };
 		float playerSpeed{ INITIAL_SPEED };
@@ -45,7 +47,7 @@ int main()
 		int& playerDirectionPtr = playerDirection;
 
 
-		// Init player
+		// Init player Shape
 		sf::RectangleShape playerShape;
 		playerShape.setSize(sf::Vector2f(APPLE_SIZE, APPLE_SIZE));
 		playerShape.setFillColor(sf::Color::Red);
@@ -59,6 +61,25 @@ int main()
 		bool isAppleEaten[NUM_APPLES];
 
 		sf::CircleShape applesShape[NUM_APPLES];
+		
+		// Init Obstacles
+		float obstacleX[NUM_OBSTACLES];
+		float obstacleY[NUM_OBSTACLES];
+
+		sf::RectangleShape obstacleShapes[NUM_OBSTACLES];
+
+		for (size_t i = 0; i < NUM_OBSTACLES; i++)
+		{
+			obstacleX[i] = rand() / (float)RAND_MAX * SCREEN_WIDTH;
+			obstacleY[i] = rand() / (float)RAND_MAX * SCRENN_HEIGHT;
+
+			obstacleShapes[i].setSize(sf::Vector2f(rand() / (float)RAND_MAX * 100, (rand() / (float)RAND_MAX * 100)));
+			obstacleShapes[i].setOrigin(obstacleShapes[i].getSize().x / 2.f, obstacleShapes[i].getSize().y / 2.f);
+
+			obstacleShapes[i].setPosition(obstacleX[i], obstacleY[i]);
+
+			obstacleShapes[i].setFillColor(sf::Color::Magenta);
+		}
 
 		for (int i = 0; i < NUM_APPLES; i++)
 		{
@@ -155,12 +176,7 @@ int main()
 				break;
 			}
 
-			// -------------DRAW--------------
-
-			window.clear();
-			playerShape.setPosition(playerX, playerY);
-
-
+			// Check on apples collision
 
 			for (size_t i = 0; i < NUM_APPLES; i++)
 			{
@@ -198,6 +214,30 @@ int main()
 			}
 
 
+			// Check on obstacle Collision
+
+						
+
+			for (size_t i = 0; i < NUM_OBSTACLES; i++)
+			{
+				float dx = abs(playerX - obstacleX[i]);
+				float dy = abs(playerY - obstacleY[i]);
+
+				if (dx <= (APPLE_SIZE + PLAYER_SIZE) / 2.f &&
+					dy <= (APPLE_SIZE + PLAYER_SIZE) / 2.f)
+				{
+					break;
+				}
+			}
+
+			// -------------DRAW--------------
+
+			window.clear();
+			playerShape.setPosition(playerX, playerY);
+
+
+
+
 
 			// Draw Apples
 		
@@ -209,6 +249,12 @@ int main()
 				}
 			}
 
+			// Draw Obstacles
+
+			for (size_t i = 0; i < NUM_OBSTACLES; i++)
+			{
+				window.draw(obstacleShapes[i]);
+			}
 
 
 			// Draw Player
