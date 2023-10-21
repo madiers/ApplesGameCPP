@@ -24,7 +24,23 @@ const float APPLE_SIZE{ 20.f };
 // Obstacles
 const int NUM_OBSTACLES{ 5 };
 
+// Game Structs
 
+struct Vector2D
+{
+	float x{ 0 };
+	float y{ 0 };
+};
+
+enum class PlayerDirection
+{
+	Right = 0,
+	Up,
+	Left,
+	Down
+};
+
+typedef Vector2D Position2D;
 
 int main()
 {
@@ -40,11 +56,14 @@ int main()
 	do
 	{
 		// Player Initialization
-		float playerX{ SCREEN_WIDTH / 2.f };
-		float playerY{ SCRENN_HEIGHT / 2.f };
+
+		Position2D playerPosition{ SCREEN_WIDTH / 2.f, SCRENN_HEIGHT / 2.f };
+
+		// float playerX{ SCREEN_WIDTH / 2.f };
+		// float playerY{ SCRENN_HEIGHT / 2.f };
 		float playerSpeed{ INITIAL_SPEED };
-		int playerDirection{ 0 }; // 0 - Right, 1 - Up, 2 - Left, 3 - Down 
-		int& playerDirectionPtr = playerDirection;
+		PlayerDirection playerDirection{ PlayerDirection::Right };
+		PlayerDirection& playerDirectionPtr = playerDirection;
 
 
 		// Init player Shape
@@ -52,12 +71,13 @@ int main()
 		playerShape.setSize(sf::Vector2f(APPLE_SIZE, APPLE_SIZE));
 		playerShape.setFillColor(sf::Color::Red);
 		playerShape.setOrigin(PLAYER_SIZE/2.f, PLAYER_SIZE/2.f);
-		playerShape.setPosition(playerX, playerY);
+		playerShape.setPosition(playerPosition.x, playerPosition.y);
 
 
 		// Init apples
-		float applesX[NUM_APPLES];
-		float applesY[NUM_APPLES];
+		
+		Position2D applesX[NUM_APPLES];
+		Position2D applesY[NUM_APPLES];
 		bool isAppleEaten[NUM_APPLES];
 
 		sf::CircleShape applesShape[NUM_APPLES];
@@ -85,13 +105,13 @@ int main()
 		{
 			isAppleEaten[i] = false;
 
-			applesX[i] = rand() / (float)RAND_MAX * SCREEN_WIDTH;
-			applesY[i] = rand() / (float)RAND_MAX * SCRENN_HEIGHT;
+			applesX[i].x = rand() / (float)RAND_MAX * SCREEN_WIDTH;
+			applesY[i].y = rand() / (float)RAND_MAX * SCRENN_HEIGHT;
 
 			applesShape[i].setRadius(APPLE_SIZE/2.f);
 			applesShape[i].setFillColor(sf::Color::Blue);
 			applesShape[i].setOrigin(APPLE_SIZE / 2.f, APPLE_SIZE / 2.f);
-			applesShape[i].setPosition(applesX[i], applesY[i]);
+			applesShape[i].setPosition(applesX[i].x, applesY[i].y);
 		}
 
 		int numEatenApples{ 0 };
@@ -127,50 +147,52 @@ int main()
 			}
 
 			// Chack on KeyPressed
+			// I don't like Switch Case	так что и не использовал
+
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				playerDirection = 0;
+				playerDirection = PlayerDirection::Right;
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
-				playerDirection = 2;
+				playerDirection = PlayerDirection::Left;
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-				playerDirection = 1;
+				playerDirection = PlayerDirection::Up;
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				playerDirection = 3;
+				playerDirection = PlayerDirection::Down;
 			}
 
 		
-			if (playerDirection == 0) // Right
+			if (playerDirection == PlayerDirection::Right) // Right
 			{
-				playerX += playerSpeed * deltaTime;
+				playerPosition.x += playerSpeed * deltaTime;
 			}
-			else if (playerDirection == 2) // Left
+			else if (playerDirection == PlayerDirection::Left) // Left
 			{
-				playerX -= playerSpeed * deltaTime;
+				playerPosition.x -= playerSpeed * deltaTime;
 			}
-			else if (playerDirection == 1) // Up
+			else if (playerDirection == PlayerDirection::Up) // Up
 			{
-				playerY -= playerSpeed * deltaTime;
+				playerPosition.y -= playerSpeed * deltaTime;
 			}
-			else if (playerDirection == 3) // Down
+			else if (playerDirection == PlayerDirection::Down) // Down
 			{
-				playerY += playerSpeed * deltaTime;
+				playerPosition.y += playerSpeed * deltaTime;
 			}
 
 
-			if ((playerX + playerShape.getSize().x / 2.f) > window.getSize().x || (playerX - playerShape.getSize().x / 2.f) < 0)
+			if ((playerPosition.x + playerShape.getSize().x / 2.f) > window.getSize().x || (playerPosition.x - playerShape.getSize().x / 2.f) < 0)
 			{
 				playerShape.setFillColor(sf::Color::Blue);
 				break;
 			}
 
-			if ((playerY + playerShape.getSize().y / 2.f) > window.getSize().y || (playerY - playerShape.getSize().y / 2.f) < 0)
+			if ((playerPosition.y + playerShape.getSize().y / 2.f) > window.getSize().y || (playerPosition.y - playerShape.getSize().y / 2.f) < 0)
 			{
 				playerShape.setFillColor(sf::Color::Blue);
 				break;
@@ -192,8 +214,8 @@ int main()
 						numEatenApples++;
 					}*/
 
-				float sqDistance = (playerX - applesX[i]) * (playerX - applesX[i]) +
-					(playerY - applesY[i]) * (playerY - applesY[i]);
+				float sqDistance = (playerPosition.x - applesX[i].x) * (playerPosition.x - applesX[i].x) +
+					(playerPosition.y - applesY[i].y) * (playerPosition.y - applesY[i].y);
 
 				float sqRadiusSum = (APPLE_SIZE + PLAYER_SIZE) * (APPLE_SIZE + PLAYER_SIZE) / 4;
 			
@@ -207,9 +229,9 @@ int main()
 
 					//Respawn the apple
 
-					applesX[i] = rand() / (float)RAND_MAX * SCREEN_WIDTH;
-					applesY[i] = rand() / (float)RAND_MAX * SCRENN_HEIGHT;
-					applesShape[i].setPosition(applesX[i], applesY[i]);
+					applesX[i].x = rand() / (float)RAND_MAX * SCREEN_WIDTH;
+					applesY[i].y = rand() / (float)RAND_MAX * SCRENN_HEIGHT;
+					applesShape[i].setPosition(applesX[i].x, applesY[i].y);
 				}
 			}
 
@@ -220,8 +242,8 @@ int main()
 
 			for (size_t i = 0; i < NUM_OBSTACLES; i++)
 			{
-				float dx = abs(playerX - obstacleX[i]);
-				float dy = abs(playerY - obstacleY[i]);
+				float dx = abs(playerPosition.x - obstacleX[i]);
+				float dy = abs(playerPosition.y - obstacleY[i]);
 
 				if (dx <= (APPLE_SIZE + PLAYER_SIZE) / 2.f &&
 					dy <= (APPLE_SIZE + PLAYER_SIZE) / 2.f)
@@ -233,7 +255,7 @@ int main()
 			// -------------DRAW--------------
 
 			window.clear();
-			playerShape.setPosition(playerX, playerY);
+			playerShape.setPosition(playerPosition.x, playerPosition.y);
 
 
 
