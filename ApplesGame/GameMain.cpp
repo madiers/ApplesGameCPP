@@ -22,7 +22,8 @@ const float APPLE_SIZE{ 20.f };
 
 
 // Obstacles
-const int NUM_OBSTACLES{ 5 };
+const float OBSTACLE_SIZE{ 20.f };
+ const int NUM_OBSTACLES{ 5 };
 
 // Game Structs
 
@@ -42,6 +43,35 @@ enum class PlayerDirection
 
 typedef Vector2D Position2D;
 
+
+Position2D GetRandomPositionOnScreen(sf::RenderWindow& window)
+{
+	Position2D result;
+	result.x = rand() / (float)RAND_MAX * window.getSize().x;
+	result.y = rand() / (float)RAND_MAX * window.getSize().y;
+	return result;
+}
+
+
+bool IsRectCollinde(Position2D& rectPos1, Vector2D rectSize1,
+	Position2D& rectPos2, Vector2D rectSize2)
+{
+	float dx = abs(rectPos1.x - rectPos2.x);
+	float dy = abs(rectPos1.y - rectPos2.y);
+
+	return (dx <= (rectSize1.x + rectSize2.x) / 2.f &&
+		dy <= (rectSize1.y + rectSize2.y) / 2.f);
+}
+
+bool IsRectCircleCollide(Position2D& rectPos, float rectSize, Position2D& circlePos, float circleRadius)
+{
+	float sqDistance = (rectPos.x - circlePos.x) * (rectPos.x - circlePos.x) +
+		(rectPos.y - circlePos.y) * (rectPos.y - circlePos.y);
+
+	float sqRadiusSum = (rectSize + circleRadius) * (rectSize + circleRadius) / 4;
+
+	return sqDistance <= sqRadiusSum;
+}
 
 struct GameState
 {
@@ -63,12 +93,12 @@ struct GameState
 	sf::RectangleShape obstacleShapes[NUM_OBSTACLES];
 };
 
-void InitGame(GameState& gameState)
+void InitGame(GameState& gameState, sf::RenderWindow& window)
 {
 	
 	// Init Player Settings
 
-	gameState.playerPosition = { SCREEN_WIDTH / 2.f, SCRENN_HEIGHT / 2.f };
+	gameState.playerPosition = { window.getSize().x / 2.f, window.getSize().y / 2.f };
 	gameState.playerSpeed = INITIAL_SPEED;
 	gameState.playerDirection = PlayerDirection::Right;
 
@@ -86,9 +116,7 @@ void InitGame(GameState& gameState)
 
 	for (int i = 0; i < NUM_APPLES; i++)
 	{
-		//gameState.isAppleEaten[i] = false;
-		gameState.applesPos[i].x = rand() / (float)RAND_MAX * SCREEN_WIDTH;
-		gameState.applesPos[i].y = rand() / (float)RAND_MAX * SCRENN_HEIGHT;
+		gameState.applesPos[i] = GetRandomPositionOnScreen(window);
 		gameState.applesShape[i].setRadius(APPLE_SIZE / 2.f);
 		gameState.applesShape[i].setFillColor(sf::Color::Blue);
 		gameState.applesShape[i].setOrigin(APPLE_SIZE / 2.f, APPLE_SIZE / 2.f);
@@ -100,9 +128,8 @@ void InitGame(GameState& gameState)
 
 	for (size_t i = 0; i < NUM_OBSTACLES; i++)
 	{
-		gameState.obstaclePos[i].x = rand() / (float)RAND_MAX * SCREEN_WIDTH;
-		gameState.obstaclePos[i].y = rand() / (float)RAND_MAX * SCRENN_HEIGHT;
-		gameState.obstacleShapes[i].setSize(sf::Vector2f(rand() / (float)RAND_MAX * 100, (rand() / (float)RAND_MAX * 100)));
+		gameState.obstaclePos[i] = GetRandomPositionOnScreen(window);
+		gameState.obstacleShapes[i].setSize({OBSTACLE_SIZE, OBSTACLE_SIZE});
 		gameState.obstacleShapes[i].setOrigin(gameState.obstacleShapes[i].getSize().x / 2.f, gameState.obstacleShapes[i].getSize().y / 2.f);
 		gameState.obstacleShapes[i].setPosition(gameState.obstaclePos[i].x, gameState.obstaclePos[i].y);
 		gameState.obstacleShapes[i].setFillColor(sf::Color::Magenta);
@@ -154,17 +181,18 @@ void UpdateGame(GameState& gameState, float& deltaTime, sf::RenderWindow& window
 		gameState.playerPosition.y += gameState.playerSpeed * deltaTime;
 	}
 
+	// Walls Collide
 
 	if ((gameState.playerPosition.x + gameState.playerShape.getSize().x / 2.f) > window.getSize().x || (gameState.playerPosition.x - gameState.playerShape.getSize().x / 2.f) < 0)
 	{
 		gameState.playerShape.setFillColor(sf::Color::Blue);
-		InitGame(gameState);
+		InitGame(gameState, window);
 	}
 
 	if ((gameState.playerPosition.y + gameState.playerShape.getSize().y / 2.f) > window.getSize().y || (gameState.playerPosition.y - gameState.playerShape.getSize().y / 2.f) < 0)
 	{
 		gameState.playerShape.setFillColor(sf::Color::Blue);
-		InitGame(gameState);
+		InitGame(gameState, window);
 	}
 
 	// Check on apples collision
@@ -172,12 +200,8 @@ void UpdateGame(GameState& gameState, float& deltaTime, sf::RenderWindow& window
 	for (size_t i = 0; i < NUM_APPLES; i++)
 	{
 
-		float sqDistance = (gameState.playerPosition.x - gameState.applesPos[i].x) * (gameState.playerPosition.x - gameState.applesPos[i].x) +
-			(gameState.playerPosition.y - gameState.applesPos[i].y) * (gameState.playerPosition.y - gameState.applesPos[i].y);
-
-		float sqRadiusSum = (APPLE_SIZE + PLAYER_SIZE) * (APPLE_SIZE + PLAYER_SIZE) / 4;
-
-		if (sqDistance <= sqRadiusSum)
+		if (IsRectCircleCollide(gameState.playerPosition, gameState.playerShape.getSize().x, gameState.applesPos[i], 
+			gameState.applesShape[i].getRadius()))
 		{
 			gameState.numEatenApples++;
 
@@ -186,8 +210,7 @@ void UpdateGame(GameState& gameState, float& deltaTime, sf::RenderWindow& window
 
 			//Respawn the apple
 
-			gameState.applesPos[i].x = rand() / (float)RAND_MAX * SCREEN_WIDTH;
-			gameState.applesPos[i].y = rand() / (float)RAND_MAX * SCRENN_HEIGHT;
+			gameState.applesPos[i] = GetRandomPositionOnScreen(window);
 			gameState.applesShape[i].setPosition(gameState.applesPos[i].x, gameState.applesPos[i].y);
 		}
 	}
@@ -195,19 +218,17 @@ void UpdateGame(GameState& gameState, float& deltaTime, sf::RenderWindow& window
 
 	// Check on obstacle Collision
 
-
-
 	for (size_t i = 0; i < NUM_OBSTACLES; i++)
 	{
-		float dx = abs(gameState.playerPosition.x - gameState.obstaclePos[i].x);
-		float dy = abs(gameState.playerPosition.y - gameState.obstaclePos[i].y);
-
-		if (dx <= (APPLE_SIZE + PLAYER_SIZE) / 2.f &&
-			dy <= (APPLE_SIZE + PLAYER_SIZE) / 2.f)
+		
+		if (IsRectCollinde(gameState.playerPosition, {PLAYER_SIZE, PLAYER_SIZE}, gameState.obstaclePos[i], {OBSTACLE_SIZE, OBSTACLE_SIZE}))
 		{
+			InitGame(gameState, window);
 			break;
 		}
 	}
+
+	
 
 	// -------------DRAW--------------
 
@@ -235,6 +256,11 @@ void UpdateGame(GameState& gameState, float& deltaTime, sf::RenderWindow& window
 
 }
 
+void DeinitializeGame(GameState& gameState)
+{
+
+}
+
 
 int main()
 {
@@ -247,12 +273,13 @@ int main()
 	window.setFramerateLimit(60);
 	
 
+	GameState gameState;
+	
 	do
 	{
 		// Initialization
 
-		GameState gameState;
-		InitGame(gameState);
+		InitGame(gameState, window);
 
 
 		// Init game clock
@@ -285,6 +312,9 @@ int main()
 
 		}
 	} while (isGameRunning);
+
+	DeinitializeGame(gameState);
+
 	return 0;
 }
 
