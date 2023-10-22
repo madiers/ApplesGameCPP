@@ -1,27 +1,11 @@
 ﻿// ©2023, XYZ School. All rights reserved.
 // Authored by Aleksandr Rybalka (polterageist@gmail.com)
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <time.h>
-#include "Math.h"
-#include "Player.h"
-#include "Constants.h"
-#include "Apple.h"
-#include "Obstacle.h"
 #include "Game.h"
 
 int seed = (int)time(nullptr);
 
-
 bool isGameRunning{ true };
-
-
-
-
-
-
-
 
 void DeinitializeGame(Game& gameState)
 {
