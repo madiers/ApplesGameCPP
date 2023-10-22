@@ -16,12 +16,33 @@
     <ClCompile Include="Math.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Apple.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="Math.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Apple.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

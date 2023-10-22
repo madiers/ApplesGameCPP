@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Math.h"
+#include "Constants.h"
+
 enum class PlayerDirection
 {
 	Right = 0,
@@ -12,8 +14,8 @@ enum class PlayerDirection
 struct Player
 {
 	Position2D playerPosition;
-	float playerSpeed;
-	PlayerDirection playerDirection;
+	float playerSpeed{INITIAL_SPEED};
+	PlayerDirection playerDirection{PlayerDirection::Right};
 	sf::RectangleShape playerShape;
 };
 
