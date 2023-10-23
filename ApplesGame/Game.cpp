@@ -79,7 +79,7 @@ void UpdateGame(Game& gameState, float& deltaTime, sf::RenderWindow& window)
 
 	for (size_t i = 0; i < NUM_APPLES; i++)
 	{
-		//apple = gameState.apples[i];
+
 		if (IsRectCircleCollide(gameState.player.playerPosition,
 			gameState.player.playerShape.getSize().x,
 			gameState.apples[i].applesPos,
@@ -88,7 +88,7 @@ void UpdateGame(Game& gameState, float& deltaTime, sf::RenderWindow& window)
 			gameState.numEatenApples++;
 
 			// Acceleratre Player with each eaten apple
-			gameState.player.playerSpeed += 0.5f;
+			gameState.player.playerSpeed += 20.f;
 
 
 			//Respawn the apple

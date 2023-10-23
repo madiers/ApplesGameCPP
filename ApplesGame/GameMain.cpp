@@ -21,7 +21,7 @@ int main()
 	srand(seed);
 
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCRENN_HEIGHT), "Apples Game");
-	window.setFramerateLimit(60);
+	//window.setFramerateLimit(60);
 	
 
 	Game gameState;
