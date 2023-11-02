@@ -3,10 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include "Math.h"
 
-struct Obstacle
+namespace ApplesGame
 {
-	Position2D obstaclePos;
-	sf::RectangleShape obstacleShape;
-};
+	struct Obstacle
+	{
+		Position2D obstaclePos;
+		sf::RectangleShape obstacleShape;
+	};
 
-void InitObstacle(Obstacle& obstacle, sf::RenderWindow& window);
+	void InitObstacle(Obstacle& obstacle, sf::RenderWindow& window);
+}

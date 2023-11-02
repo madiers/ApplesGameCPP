@@ -3,18 +3,21 @@
 
 #include "Game.h"
 
+
+
 int seed = (int)time(nullptr);
 
 bool isGameRunning{ true };
-
+/*
 void DeinitializeGame(Game& gameState)
 {
 
-}
+}*/
 
 
 int main()
 {
+	using namespace ApplesGame;
 	// Window Initialization
 
 	int seed = (int)time(nullptr);
@@ -63,7 +66,7 @@ int main()
 		}
 	} while (isGameRunning);
 
-	DeinitializeGame(gameState);
+	//DeinitializeGame(gameState);
 
 	return 0;
 }
