@@ -7,6 +7,13 @@ namespace ApplesGame
 {
 	struct Game
 	{
+<<<<<<< Updated upstream
+=======
+		// Textures
+		sf::Texture playerTexture;
+		sf::Texture appleTexture;
+
+>>>>>>> Stashed changes
 		// Player
 		Player player;
 

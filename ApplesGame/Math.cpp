@@ -2,6 +2,28 @@
 
 namespace ApplesGame
 {
+<<<<<<< Updated upstream
+=======
+	void SetSpriteSize(sf::Sprite& sprite, float Width, float Height)
+	{
+		sf::FloatRect spriteRect{ sprite.getLocalBounds() };
+		sf::Vector2f scale{ Width / spriteRect.width, Height / spriteRect.height };
+
+		sprite.setScale(scale);
+	}
+
+	void SetSpriteRelativeOrigin(sf::Sprite sprite, float originX, float originY)
+	{
+		sf::FloatRect spriteRect{ sprite.getLocalBounds() };
+		sprite.setOrigin(originX * spriteRect.width, originY * spriteRect.height);
+	}
+
+	void SetSpriteCenterOrigin(sf::Sprite& sprite)
+	{
+		sprite.setOrigin(sprite.getScale().x / 2.f, sprite.getScale().y / 2.f);
+	}
+
+>>>>>>> Stashed changes
 	Position2D GetRandomPositionOnScreen(sf::RenderWindow& window)
 	{
 		Position2D result;

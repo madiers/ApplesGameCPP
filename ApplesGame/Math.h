@@ -11,6 +11,15 @@ namespace ApplesGame
 
 	typedef Vector2D Position2D;
 
+<<<<<<< Updated upstream
+=======
+	void SetSpriteSize(sf::Sprite& sprite, float Width, float Height);
+
+	void SetSpriteRelativeOrigin(sf::Sprite sprite, float originX, float originY);
+
+	void SetSpriteCenterOrigin(sf::Sprite& sprite);
+
+>>>>>>> Stashed changes
 	Position2D GetRandomPositionOnScreen(sf::RenderWindow& window);
 
 	bool IsRectCollinde(Position2D& rectPos1, Vector2D rectSize1,

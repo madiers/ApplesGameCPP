@@ -31,6 +31,8 @@ int main()
 	
 	do
 	{
+		sf::sleep(sf::milliseconds(16));
+
 		// Initialization
 
 		InitGame(gameState, window);

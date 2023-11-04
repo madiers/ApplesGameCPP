@@ -5,11 +5,29 @@ namespace ApplesGame
 
 	void InitGame(Game& gameState, sf::RenderWindow& window)
 	{
+<<<<<<< Updated upstream
 		InitPlayer(gameState.player, window, PLAYER_SIZE, INITIAL_SPEED);
 
+=======
+		// Load Textures
+
+		gameState.playerTexture.loadFromFile(RESOURCES_PATH + "\\Player.png");
+		gameState.appleTexture.loadFromFile(RESOURCES_PATH + "\\Apple.png");
+
+		// Set Texture for player
+
+		gameState.player.sprite.setTexture(gameState.playerTexture);
+
+		// Init Objects
+
+		InitPlayer(gameState.player, window, PLAYER_SIZE, INITIAL_SPEED, gameState);
+
+		
+>>>>>>> Stashed changes
 		for (size_t i = 0; i < NUM_APPLES; i++)
 		{
 			InitApple(gameState.apples[i], window);
+			gameState.apples[i].sprtie.setTexture(gameState.appleTexture);
 		}
 
 		for (size_t i = 0; i < NUM_OBSTACLES; i++)
@@ -47,18 +65,22 @@ namespace ApplesGame
 		if (gameState.player.playerDirection == PlayerDirection::Right) // Right
 		{
 			gameState.player.playerPosition.x += gameState.player.playerSpeed * deltaTime;
+			gameState.player.sprite.setRotation(0.f);
 		}
 		else if (gameState.player.playerDirection == PlayerDirection::Left) // Left
 		{
 			gameState.player.playerPosition.x -= gameState.player.playerSpeed * deltaTime;
+			gameState.player.sprite.setRotation(180.f);
 		}
 		else if (gameState.player.playerDirection == PlayerDirection::Up) // Up
 		{
 			gameState.player.playerPosition.y -= gameState.player.playerSpeed * deltaTime;
+			gameState.player.sprite.setRotation(-90.f);
 		}
 		else if (gameState.player.playerDirection == PlayerDirection::Down) // Down
 		{
 			gameState.player.playerPosition.y += gameState.player.playerSpeed * deltaTime;
+			gameState.player.sprite.setRotation(90.f);
 		}
 
 		// Walls Collide
@@ -86,7 +108,7 @@ namespace ApplesGame
 			if (IsRectCircleCollide(gameState.player.playerPosition,
 				gameState.player.playerShape.getSize().x,
 				gameState.apples[i].applesPos,
-				gameState.apples[i].applesShape.getRadius()))
+				gameState.apples[i].sprtie.getScale().x))
 			{
 				gameState.numEatenApples++;
 
@@ -96,7 +118,7 @@ namespace ApplesGame
 
 				//Respawn the apple
 				gameState.apples[i].applesPos = GetRandomPositionOnScreen(window);
-				gameState.apples[i].applesShape.setPosition(gameState.apples[i].applesPos.x, gameState.apples[i].applesPos.y);
+				gameState.apples[i].sprtie.setPosition(gameState.apples[i].applesPos.x, gameState.apples[i].applesPos.y);
 			}
 		}
 
@@ -116,17 +138,22 @@ namespace ApplesGame
 
 
 
-		// -------------DRAW--------------
 
 		gameState.player.playerShape.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
 
+<<<<<<< Updated upstream
 
+=======
+	}
+		// -------------DRAW--------------
+
+
+	void DrawGame(Game& gameState, sf::RenderWindow& window)
+	{
+>>>>>>> Stashed changes
 		// Draw Apples
 
-		for (int i{ 0 }; i < NUM_APPLES; i++)
-		{
-			window.draw(gameState.apples[i].applesShape);
-		}
+		DrawApple(gameState, window);
 
 		// Draw Obstacles
 
