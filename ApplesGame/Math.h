@@ -17,4 +17,11 @@ namespace ApplesGame
 		Position2D& rectPos2, Vector2D rectSize2);
 
 	bool IsRectCircleCollide(Position2D& rectPos, float rectSize, Position2D& circlePos, float circleRadius);
+
+
+	void SetSpriteSize(sf::Sprite& sprite, float desiredWidth, float desiredHeight);
+	void SetSpriteRelativeOrigin(sf::Sprite& sprite, float originX, float originY);
+	
+	bool IsSpritesCollide(sf::Sprite& sprite1, sf::Sprite& sprite2);
+
 }

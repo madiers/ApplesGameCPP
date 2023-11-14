@@ -18,6 +18,23 @@ namespace ApplesGame
 		}
 
 		int numEatenApples{ 0 };
+
+		// Text
+
+		gameState.font.loadFromFile(RESOURCES_PATH + "\\Fonts\\Roboto-Medium.ttf");
+		gameState.text.setFont(gameState.font);
+		gameState.text.setString("Apples Eaten: ");
+		gameState.text.setFillColor(sf::Color::White);
+		gameState.text.setPosition(SCREEN_WIDTH / 2.f, SCRENN_HEIGHT / 6.f);
+		gameState.text.setCharacterSize(24);
+
+		// Sound
+		gameState.bufferDeath.loadFromFile(RESOURCES_PATH + "\\Death.wav");
+		gameState.soundDeath.setBuffer(gameState.bufferDeath);
+
+		gameState.bufferApple.loadFromFile(RESOURCES_PATH + "\\AppleEat.wav");
+		gameState.soundApple.setBuffer(gameState.bufferApple);
+
 	}
 
 	void UpdateGame(Game& gameState, float& deltaTime, sf::RenderWindow& window)
@@ -47,33 +64,47 @@ namespace ApplesGame
 		if (gameState.player.playerDirection == PlayerDirection::Right) // Right
 		{
 			gameState.player.playerPosition.x += gameState.player.playerSpeed * deltaTime;
+			gameState.player.sprite.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
+			gameState.player.sprite.setRotation(0.f);
 		}
 		else if (gameState.player.playerDirection == PlayerDirection::Left) // Left
 		{
 			gameState.player.playerPosition.x -= gameState.player.playerSpeed * deltaTime;
+			gameState.player.sprite.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
+			gameState.player.sprite.setRotation(180.f);
 		}
 		else if (gameState.player.playerDirection == PlayerDirection::Up) // Up
 		{
 			gameState.player.playerPosition.y -= gameState.player.playerSpeed * deltaTime;
+			gameState.player.sprite.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
+			gameState.player.sprite.setRotation(-90.f);
 		}
 		else if (gameState.player.playerDirection == PlayerDirection::Down) // Down
 		{
 			gameState.player.playerPosition.y += gameState.player.playerSpeed * deltaTime;
+			gameState.player.sprite.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
+			gameState.player.sprite.setRotation(90.f);
 		}
 
 		// Walls Collide
 
-		if ((gameState.player.playerPosition.x + gameState.player.playerShape.getSize().x / 2.f) > window.getSize().x ||
-			(gameState.player.playerPosition.x - gameState.player.playerShape.getSize().x / 2.f) < 0)
+		if ((gameState.player.playerPosition.x + gameState.player.sprite.getScale().x / 2.f) > window.getSize().x ||
+			(gameState.player.playerPosition.x - gameState.player.sprite.getScale().x / 2.f) < 0)
 		{
-			gameState.player.playerShape.setFillColor(sf::Color::Blue);
+
+			gameState.soundDeath.play();
+			sf::sleep(sf::seconds(2));
+			//gameState.player.playerShape.setFillColor(sf::Color::Blue);
 			InitGame(gameState, window);
 		}
 
-		if ((gameState.player.playerPosition.y + gameState.player.playerShape.getSize().y / 2.f) > window.getSize().y ||
-			(gameState.player.playerPosition.y - gameState.player.playerShape.getSize().y / 2.f) < 0)
+		if ((gameState.player.playerPosition.y + gameState.player.sprite.getScale().y / 2.f) > window.getSize().y ||
+			(gameState.player.playerPosition.y - gameState.player.sprite.getScale().y / 2.f) < 0)
 		{
-			gameState.player.playerShape.setFillColor(sf::Color::Blue);
+
+			gameState.soundDeath.play();
+			sf::sleep(sf::seconds(2));
+			//gameState.player.playerShape.setFillColor(sf::Color::Blue);
 			InitGame(gameState, window);
 		}
 
@@ -83,20 +114,20 @@ namespace ApplesGame
 		for (size_t i = 0; i < NUM_APPLES; i++)
 		{
 
-			if (IsRectCircleCollide(gameState.player.playerPosition,
-				gameState.player.playerShape.getSize().x,
-				gameState.apples[i].applesPos,
-				gameState.apples[i].applesShape.getRadius()))
+			if (IsRectCollinde(gameState.player.playerPosition, { PLAYER_SIZE, PLAYER_SIZE }, gameState.apples[i].applesPos,
+				{ APPLE_SIZE, APPLE_SIZE }))
 			{
 				gameState.numEatenApples++;
+				gameState.soundApple.play();
 
 				// Acceleratre Player with each eaten apple
 				gameState.player.playerSpeed += 20.f;
+				gameState.text.setString("Apples Eaten: " + std::to_string(gameState.numEatenApples));
 
 
 				//Respawn the apple
 				gameState.apples[i].applesPos = GetRandomPositionOnScreen(window);
-				gameState.apples[i].applesShape.setPosition(gameState.apples[i].applesPos.x, gameState.apples[i].applesPos.y);
+				gameState.apples[i].sprite.setPosition(gameState.apples[i].applesPos.x, gameState.apples[i].applesPos.y);
 			}
 		}
 
@@ -109,6 +140,8 @@ namespace ApplesGame
 			if (IsRectCollinde(gameState.player.playerPosition, { PLAYER_SIZE, PLAYER_SIZE }, gameState.obstacles[i].obstaclePos,
 				{ OBSTACLE_SIZE, OBSTACLE_SIZE }))
 			{
+				gameState.soundDeath.play();
+				sf::sleep(sf::seconds(2));
 				InitGame(gameState, window);
 				break;
 			}
@@ -116,30 +149,34 @@ namespace ApplesGame
 
 
 
-		// -------------DRAW--------------
 
-		gameState.player.playerShape.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
 
+	}
+
+	void DrawGame(Game& gameState, sf::RenderWindow& window)
+	{
 
 		// Draw Apples
 
 		for (int i{ 0 }; i < NUM_APPLES; i++)
 		{
-			window.draw(gameState.apples[i].applesShape);
+			window.draw(gameState.apples[i].sprite);
 		}
 
 		// Draw Obstacles
 
 		for (size_t i = 0; i < NUM_OBSTACLES; i++)
 		{
-			window.draw(gameState.obstacles[i].obstacleShape);
+			window.draw(gameState.obstacles[i].sprite);
 		}
 
 
 		// Draw Player
 
-		window.draw(gameState.player.playerShape);
+		window.draw(gameState.player.sprite);
 
+		// Draw Text
+		window.draw(gameState.text);
 	}
 
 }

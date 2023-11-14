@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Math.h"
+#include "SFML/Audio.hpp"
 
 namespace ApplesGame
 {
@@ -8,6 +9,8 @@ namespace ApplesGame
 	{
 		Position2D applesPos;
 		sf::CircleShape applesShape;
+		sf::Texture appleTexture;
+		sf::Sprite sprite;
 	};
 
 	void InitApple(Apple& apple, sf::RenderWindow& window);

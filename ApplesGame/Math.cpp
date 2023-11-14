@@ -28,5 +28,29 @@ namespace ApplesGame
 
 		return sqDistance <= sqRadiusSum;
 	}
+
+
+	void SetSpriteSize(sf::Sprite& sprite, float desiredWidth, float desiredHeight)
+	{
+		sf::FloatRect spriteRect = sprite.getLocalBounds();
+		sf::Vector2f scale = { desiredWidth / spriteRect.width, desiredHeight / spriteRect.height };
+		sprite.setScale(scale);
+	}
+	void SetSpriteRelativeOrigin(sf::Sprite& sprite, float originX, float originY)
+	{
+		sf::FloatRect spriteRect = sprite.getLocalBounds();
+		sprite.setOrigin(originX * spriteRect.width, originY * spriteRect.height);
+	}
+
+	bool IsSpritesCollide(sf::Sprite& sprite1, sf::Sprite& sprite2)
+	{
+
+		float dx = abs(sprite1.getPosition().x - sprite2.getPosition().x);
+		float dy = abs(sprite1.getPosition().y - sprite2.getPosition().y);
+
+		return (dx <= (sprite1.getScale().x + sprite2.getScale().x) / 2.f &&
+			dy <= (sprite1.getScale().y + sprite2.getScale().y) / 2.f);
+
+	}
 }
 

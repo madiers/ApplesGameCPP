@@ -61,6 +61,7 @@ int main()
 
 			window.clear();
 			UpdateGame(gameState, deltaTime, window);
+			DrawGame(gameState, window);
 			window.display();
 
 		}

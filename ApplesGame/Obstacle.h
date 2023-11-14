@@ -9,6 +9,8 @@ namespace ApplesGame
 	{
 		Position2D obstaclePos;
 		sf::RectangleShape obstacleShape;
+		sf::Texture rockTexture;
+		sf::Sprite sprite;
 	};
 
 	void InitObstacle(Obstacle& obstacle, sf::RenderWindow& window);

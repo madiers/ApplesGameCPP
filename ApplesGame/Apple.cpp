@@ -11,6 +11,11 @@ namespace ApplesGame
 		apple.applesShape.setFillColor(sf::Color::Blue);
 		apple.applesShape.setOrigin(APPLE_SIZE / 2.f, APPLE_SIZE / 2.f);
 		apple.applesShape.setPosition(apple.applesPos.x, apple.applesPos.y);
+
+		apple.appleTexture.loadFromFile(RESOURCES_PATH + "\\Apple.png");
+		apple.sprite.setTexture(apple.appleTexture);
+		apple.sprite.setPosition(apple.applesPos.x, apple.applesPos.y);
+		SetSpriteSize(apple.sprite, 15.f, 15.f);
 	}
 }
 
