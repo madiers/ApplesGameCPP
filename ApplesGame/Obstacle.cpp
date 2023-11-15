@@ -22,5 +22,12 @@ namespace ApplesGame
 
 		obstacle.sprite.setPosition(obstacle.obstaclePos.x, obstacle.obstaclePos.y);
 	}
+	void DrawObstacle(Obstacle *obstacles, sf::RenderWindow& window)
+	{
+		for (size_t i = 0; i < NUM_OBSTACLES; i++)
+		{
+			window.draw(obstacles[i].sprite);
+		}
+	}
 }
 

@@ -14,4 +14,6 @@ namespace ApplesGame
 	};
 
 	void InitObstacle(Obstacle& obstacle, sf::RenderWindow& window);
+
+	void DrawObstacle(Obstacle *obstacle, sf::RenderWindow& window);
 }

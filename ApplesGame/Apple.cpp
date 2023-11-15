@@ -17,5 +17,13 @@ namespace ApplesGame
 		apple.sprite.setPosition(apple.applesPos.x, apple.applesPos.y);
 		SetSpriteSize(apple.sprite, 15.f, 15.f);
 	}
+
+	void DrawApples(Apple* apples, sf::RenderWindow& window)
+	{
+		for (int i{ 0 }; i < NUM_APPLES; i++)
+		{
+			window.draw(apples[i].sprite);
+		}
+	}
 }
 

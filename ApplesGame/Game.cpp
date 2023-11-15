@@ -39,29 +39,8 @@ namespace ApplesGame
 
 	void UpdateGame(Game& gameState, float& deltaTime, sf::RenderWindow& window)
 	{
-		// Check on KeyPressed
-		// I don't like Switch Case	так что и не использовал
 
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			gameState.player.playerDirection = PlayerDirection::Right;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			gameState.player.playerDirection = PlayerDirection::Left;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			gameState.player.playerDirection = PlayerDirection::Up;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			gameState.player.playerDirection = PlayerDirection::Down;
-		}
-
-
-		CheckDirection(gameState.player, deltaTime);
+		ChangeDirection(gameState.player, deltaTime);
 
 		IsWallsCollide(gameState, window);
 
@@ -109,25 +88,9 @@ namespace ApplesGame
 
 	void DrawGame(Game& gameState, sf::RenderWindow& window)
 	{
-
-		// Draw Apples
-
-		for (int i{ 0 }; i < NUM_APPLES; i++)
-		{
-			window.draw(gameState.apples[i].sprite);
-		}
-
-		// Draw Obstacles
-
-		for (size_t i = 0; i < NUM_OBSTACLES; i++)
-		{
-			window.draw(gameState.obstacles[i].sprite);
-		}
-
-
-		// Draw Player
-
-		window.draw(gameState.player.sprite);
+		DrawApples(gameState.apples, window);
+		DrawObstacle(gameState.obstacles, window);
+		DrawPlayer(gameState.player, window);
 
 		// Draw Text
 		window.draw(gameState.text);

@@ -14,4 +14,7 @@ namespace ApplesGame
 	};
 
 	void InitApple(Apple& apple, sf::RenderWindow& window);
+
+	void DrawApples(Apple* apples, sf::RenderWindow& window);
+
 }

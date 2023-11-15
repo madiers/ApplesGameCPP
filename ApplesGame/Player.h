@@ -25,5 +25,7 @@ namespace ApplesGame
 
 	void InitPlayer(Player& player, sf::RenderWindow& window, float playerSize, float initialSpeed);
 
-	void CheckDirection(Player& player, float& deltaTime);
+	void ChangeDirection(Player& player, float& deltaTime);
+
+	void DrawPlayer(Player& player, sf::RenderWindow& window);
 }
