@@ -61,52 +61,9 @@ namespace ApplesGame
 		}
 
 
-		if (gameState.player.playerDirection == PlayerDirection::Right) // Right
-		{
-			gameState.player.playerPosition.x += gameState.player.playerSpeed * deltaTime;
-			gameState.player.sprite.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
-			gameState.player.sprite.setRotation(0.f);
-		}
-		else if (gameState.player.playerDirection == PlayerDirection::Left) // Left
-		{
-			gameState.player.playerPosition.x -= gameState.player.playerSpeed * deltaTime;
-			gameState.player.sprite.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
-			gameState.player.sprite.setRotation(180.f);
-		}
-		else if (gameState.player.playerDirection == PlayerDirection::Up) // Up
-		{
-			gameState.player.playerPosition.y -= gameState.player.playerSpeed * deltaTime;
-			gameState.player.sprite.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
-			gameState.player.sprite.setRotation(-90.f);
-		}
-		else if (gameState.player.playerDirection == PlayerDirection::Down) // Down
-		{
-			gameState.player.playerPosition.y += gameState.player.playerSpeed * deltaTime;
-			gameState.player.sprite.setPosition(gameState.player.playerPosition.x, gameState.player.playerPosition.y);
-			gameState.player.sprite.setRotation(90.f);
-		}
+		CheckDirection(gameState.player, deltaTime);
 
-		// Walls Collide
-
-		if ((gameState.player.playerPosition.x + gameState.player.sprite.getScale().x / 2.f) > window.getSize().x ||
-			(gameState.player.playerPosition.x - gameState.player.sprite.getScale().x / 2.f) < 0)
-		{
-
-			gameState.soundDeath.play();
-			sf::sleep(sf::seconds(2));
-			//gameState.player.playerShape.setFillColor(sf::Color::Blue);
-			InitGame(gameState, window);
-		}
-
-		if ((gameState.player.playerPosition.y + gameState.player.sprite.getScale().y / 2.f) > window.getSize().y ||
-			(gameState.player.playerPosition.y - gameState.player.sprite.getScale().y / 2.f) < 0)
-		{
-
-			gameState.soundDeath.play();
-			sf::sleep(sf::seconds(2));
-			//gameState.player.playerShape.setFillColor(sf::Color::Blue);
-			InitGame(gameState, window);
-		}
+		IsWallsCollide(gameState, window);
 
 		// Check on apples collision
 		//Apple apple;
@@ -140,14 +97,11 @@ namespace ApplesGame
 			if (IsRectCollinde(gameState.player.playerPosition, { PLAYER_SIZE, PLAYER_SIZE }, gameState.obstacles[i].obstaclePos,
 				{ OBSTACLE_SIZE, OBSTACLE_SIZE }))
 			{
-				gameState.soundDeath.play();
-				sf::sleep(sf::seconds(2));
-				InitGame(gameState, window);
+				GameOver(gameState, window);
+
 				break;
 			}
 		}
-
-
 
 
 
@@ -177,6 +131,35 @@ namespace ApplesGame
 
 		// Draw Text
 		window.draw(gameState.text);
+	}
+
+	void IsWallsCollide(Game& gameState, sf::RenderWindow& window)
+	{
+		if ((gameState.player.playerPosition.x + gameState.player.sprite.getScale().x / 2.f) > window.getSize().x ||
+			(gameState.player.playerPosition.x - gameState.player.sprite.getScale().x / 2.f) < 0)
+		{
+			GameOver(gameState, window);
+		}
+
+		if ((gameState.player.playerPosition.y + gameState.player.sprite.getScale().y / 2.f) > window.getSize().y ||
+			(gameState.player.playerPosition.y - gameState.player.sprite.getScale().y / 2.f) < 0)
+		{
+			GameOver(gameState, window);
+		}
+
+	}
+
+	void GameOver(Game& gameState, sf::RenderWindow& window)
+	{
+		gameState.soundDeath.play();
+		gameState.text.setString("Game Over!");
+		window.clear();
+		window.draw(gameState.text);
+		sf::sleep(sf::seconds(2));
+		sf::sleep(sf::seconds(2));
+		//gameState.player.playerShape.setFillColor(sf::Color::Blue);
+		InitGame(gameState, window);
+
 	}
 
 }

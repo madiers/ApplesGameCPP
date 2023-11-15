@@ -25,5 +25,32 @@ namespace ApplesGame
 		//player.playerShape.setOrigin(playerSize / 2.f, playerSize / 2.f);
 		//player.playerShape.setPosition(player.playerPosition.x, player.playerPosition.y);
 	}
+	void CheckDirection(Player& player, float& deltaTime)
+	{
+		if (player.playerDirection == PlayerDirection::Right) // Right
+		{
+			player.playerPosition.x += player.playerSpeed * deltaTime;
+			player.sprite.setPosition(player.playerPosition.x, player.playerPosition.y);
+			player.sprite.setRotation(0.f);
+		}
+		else if (player.playerDirection == PlayerDirection::Left) // Left
+		{
+			player.playerPosition.x -= player.playerSpeed * deltaTime;
+			player.sprite.setPosition(player.playerPosition.x, player.playerPosition.y);
+			player.sprite.setRotation(180.f);
+		}
+		else if (player.playerDirection == PlayerDirection::Up) // Up
+		{
+			player.playerPosition.y -= player.playerSpeed * deltaTime;
+			player.sprite.setPosition(player.playerPosition.x, player.playerPosition.y);
+			player.sprite.setRotation(-90.f);
+		}
+		else if (player.playerDirection == PlayerDirection::Down) // Down
+		{
+			player.playerPosition.y += player.playerSpeed * deltaTime;
+			player.sprite.setPosition(player.playerPosition.x, player.playerPosition.y);
+			player.sprite.setRotation(90.f);
+		}
+	}
 }
 

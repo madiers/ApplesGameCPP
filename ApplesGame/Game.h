@@ -45,5 +45,9 @@ namespace ApplesGame
 	void UpdateGame(Game& gameState, float& deltaTime, sf::RenderWindow& window);
 
 	void DrawGame(Game& gameState, sf::RenderWindow& window);
+
+	void IsWallsCollide(Game& gameState, sf::RenderWindow& window);
+
+	void GameOver(Game& gameState, sf::RenderWindow& window);
 }
 
