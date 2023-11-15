@@ -2,6 +2,7 @@
 
 namespace ApplesGame
 {
+	int numEatenApples{ 0 };
 
 	void InitGame(Game& gameState, sf::RenderWindow& window)
 	{
@@ -17,7 +18,6 @@ namespace ApplesGame
 			InitObstacle(gameState.obstacles[i], window);
 		}
 
-		int numEatenApples{ 0 };
 
 		// Text
 
@@ -34,14 +34,12 @@ namespace ApplesGame
 
 		gameState.bufferApple.loadFromFile(RESOURCES_PATH + "\\AppleEat.wav");
 		gameState.soundApple.setBuffer(gameState.bufferApple);
-
 	}
 
 	void UpdateGame(Game& gameState, float& deltaTime, sf::RenderWindow& window)
 	{
 
 		ChangeDirection(gameState.player, deltaTime);
-
 		IsWallsCollide(gameState, window);
 
 		// Check on apples collision
@@ -81,9 +79,6 @@ namespace ApplesGame
 				break;
 			}
 		}
-
-
-
 	}
 
 	void DrawGame(Game& gameState, sf::RenderWindow& window)
@@ -116,13 +111,14 @@ namespace ApplesGame
 	{
 		gameState.soundDeath.play();
 		gameState.text.setString("Game Over!");
+
 		window.clear();
+
 		window.draw(gameState.text);
 		sf::sleep(sf::seconds(2));
-		sf::sleep(sf::seconds(2));
-		//gameState.player.playerShape.setFillColor(sf::Color::Blue);
+
+		gameState.numEatenApples = 0;
+
 		InitGame(gameState, window);
-
 	}
-
 }
