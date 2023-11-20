@@ -16,14 +16,6 @@ namespace ApplesGame
 		player.playerTexture.loadFromFile(RESOURCES_PATH + "\\Player.png");
 		player.sprite.setTexture(player.playerTexture);
 		SetSpriteSize(player.sprite, 15.f, 15.f);
-
-		//SetSpriteRelativeOrigin(player.sprite, player.sprite.getScale().x / 2.f, player.sprite.getScale().y / 2.f);
-		
-
-		//player.playerShape.setSize(sf::Vector2f(playerSize, playerSize));
-		//player.playerShape.setFillColor(sf::Color::Red);
-		//player.playerShape.setOrigin(playerSize / 2.f, playerSize / 2.f);
-		//player.playerShape.setPosition(player.playerPosition.x, player.playerPosition.y);
 	}
 	void ChangeDirection(Player& player, float& deltaTime)
 	{

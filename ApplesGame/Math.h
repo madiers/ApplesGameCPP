@@ -13,10 +13,9 @@ namespace ApplesGame
 
 	Position2D GetRandomPositionOnScreen(sf::RenderWindow& window);
 
-	bool IsRectCollinde(Position2D& rectPos1, Vector2D rectSize1,
+	bool IsRectCollide(Position2D& rectPos1, Vector2D rectSize1,
 		Position2D& rectPos2, Vector2D rectSize2);
 
-	bool IsRectCircleCollide(Position2D& rectPos, float rectSize, Position2D& circlePos, float circleRadius);
 
 
 	void SetSpriteSize(sf::Sprite& sprite, float desiredWidth, float desiredHeight);

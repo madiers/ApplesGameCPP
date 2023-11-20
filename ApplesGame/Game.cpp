@@ -43,12 +43,11 @@ namespace ApplesGame
 		IsWallsCollide(gameState, window);
 
 		// Check on apples collision
-		//Apple apple;
 
 		for (size_t i = 0; i < NUM_APPLES; i++)
 		{
 
-			if (IsRectCollinde(gameState.player.playerPosition, { PLAYER_SIZE, PLAYER_SIZE }, gameState.apples[i].applesPos,
+			if (IsRectCollide(gameState.player.playerPosition, { PLAYER_SIZE, PLAYER_SIZE }, gameState.apples[i].applesPos,
 				{ APPLE_SIZE, APPLE_SIZE }))
 			{
 				gameState.numEatenApples++;
@@ -71,7 +70,7 @@ namespace ApplesGame
 		for (size_t i = 0; i < NUM_OBSTACLES; i++)
 		{
 
-			if (IsRectCollinde(gameState.player.playerPosition, { PLAYER_SIZE, PLAYER_SIZE }, gameState.obstacles[i].obstaclePos,
+			if (IsRectCollide(gameState.player.playerPosition, { PLAYER_SIZE, PLAYER_SIZE }, gameState.obstacles[i].obstaclePos,
 				{ OBSTACLE_SIZE, OBSTACLE_SIZE }))
 			{
 				GameOver(gameState, window);

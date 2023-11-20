@@ -10,24 +10,16 @@ namespace ApplesGame
 		return result;
 	}
 
-	bool IsRectCollinde(Position2D& rectPos1, Vector2D rectSize1, Position2D& rectPos2, Vector2D rectSize2)
+	bool IsRectCollide(Position2D& rectPos1, Vector2D rectSize1, Position2D& rectPos2, Vector2D rectSize2)
 	{
-		float dx = abs(rectPos1.x - rectPos2.x);
-		float dy = abs(rectPos1.y - rectPos2.y);
+		const float dx = abs(rectPos1.x - rectPos2.x);
+		const float dy = abs(rectPos1.y - rectPos2.y);
 
 		return (dx <= (rectSize1.x + rectSize2.x) / 2.f &&
 			dy <= (rectSize1.y + rectSize2.y) / 2.f);
 	}
 
-	bool IsRectCircleCollide(Position2D& rectPos, float rectSize, Position2D& circlePos, float circleRadius)
-	{
-		float sqDistance = (rectPos.x - circlePos.x) * (rectPos.x - circlePos.x) +
-			(rectPos.y - circlePos.y) * (rectPos.y - circlePos.y);
-
-		float sqRadiusSum = (rectSize + circleRadius) * (rectSize + circleRadius) / 4;
-
-		return sqDistance <= sqRadiusSum;
-	}
+	
 
 
 	void SetSpriteSize(sf::Sprite& sprite, float desiredWidth, float desiredHeight)

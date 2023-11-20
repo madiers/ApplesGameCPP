@@ -13,9 +13,6 @@ namespace ApplesGame
 		
 
 		// Apples
-		//Position2D applesPos[NUM_APPLES];
-		//sf::CircleShape applesShape[NUM_APPLES];
-
 		Apple apples[NUM_APPLES];
 
 		// Scores 

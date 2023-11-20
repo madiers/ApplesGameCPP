@@ -18,7 +18,6 @@ namespace ApplesGame
 		Position2D playerPosition;
 		float playerSpeed{INITIAL_SPEED};
 		PlayerDirection playerDirection{PlayerDirection::Right};
-		//sf::RectangleShape playerShape;
 		sf::Texture playerTexture;
 		sf::Sprite sprite;
 	};
