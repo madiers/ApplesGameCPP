@@ -1,4 +1,5 @@
 ﻿#include "Game.h"
+#include "GameModeSelector.h"
 
 namespace ApplesGame
 {
@@ -117,7 +118,7 @@ namespace ApplesGame
 		sf::sleep(sf::seconds(2));
 
 		gameState.numEatenApples = 0;
-
+		ModeSelect(window);
 		InitGame(gameState, window);
 	}
 }

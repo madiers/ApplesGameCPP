@@ -23,7 +23,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCRENN_HEIGHT), "Apples Game");
 	
 	Game gameState;
-	ModeSelect(window);
+	//ModeSelect(window);
 	
 	do
 	{
