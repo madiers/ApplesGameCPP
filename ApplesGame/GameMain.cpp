@@ -2,6 +2,7 @@
 // Authored by Aleksandr Rybalka (polterageist@gmail.com)
 
 #include "Game.h"
+#include "GameModeSelector.h"
 
 
 
@@ -22,16 +23,18 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCRENN_HEIGHT), "Apples Game");
 	
 	Game gameState;
+	ModeSelect(window);
 	
 	do
 	{
 		// Initialization
-
 		InitGame(gameState, window);
 
 		// Init game clock
 		sf::Clock gameClock;
 		float lastTime = gameClock.getElapsedTime().asSeconds();
+		
+
 
 		while (window.isOpen())
 		{
@@ -42,6 +45,7 @@ int main()
 				{
 					window.close();
 					isGameRunning = false;
+					return 0;
 				}
 			}
 
