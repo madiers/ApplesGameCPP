@@ -4,6 +4,8 @@
 
 namespace ApplesGame
 {
+	struct Game;
+
 	struct GameMode
 	{
 	private:
@@ -21,6 +23,7 @@ namespace ApplesGame
 		void SetisAcceleratable(bool isAccelerate) { isAcceleratable = isAccelerate; };
 		bool GetIsInfiniteApple() { return this->isInfiniteApple; };
 		bool GetIsAcceleratable() { return this->isAcceleratable; };
+		void ChangeGameMode(Game& gameState);
 	};
 	enum UserGameSettingsBitMask;
 	void ModeSelect(sf::RenderWindow& window, GameMode& gameMode);

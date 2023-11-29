@@ -6,6 +6,11 @@
 namespace ApplesGame
 {
 
+	void GameMode::ChangeGameMode(Game& gameState)
+	{
+
+	}
+
 	enum UserGameSettingsBitMask
 	{
 		AcceleratePlayer = 1 << 0,
@@ -118,4 +123,5 @@ namespace ApplesGame
 
 		}
 	}
+
 }
