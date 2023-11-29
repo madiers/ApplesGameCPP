@@ -28,6 +28,9 @@
     <ClCompile Include="GameModeSelector.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -51,5 +54,6 @@
     <ClInclude Include="GameModeSelector.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="GameMode.h" />
   </ItemGroup>
 </Project>

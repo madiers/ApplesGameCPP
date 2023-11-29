@@ -3,6 +3,7 @@
 #include "Obstacle.h"
 #include "Apple.h"
 #include "SFML/Audio.hpp"
+#include "GameModeSelector.h"
 
 namespace ApplesGame
 {
@@ -34,7 +35,6 @@ namespace ApplesGame
 		// Apple Eaten
 		sf::SoundBuffer bufferApple;
 		sf::Sound soundApple;
-		
 	};
 
 	void InitGame(Game& gameState, sf::RenderWindow& window);

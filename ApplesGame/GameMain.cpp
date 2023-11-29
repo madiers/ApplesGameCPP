@@ -23,7 +23,6 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCRENN_HEIGHT), "Apples Game");
 	
 	Game gameState;
-	ModeSelect(window);
 	
 	do
 	{
@@ -34,8 +33,6 @@ int main()
 		sf::Clock gameClock;
 		float lastTime = gameClock.getElapsedTime().asSeconds();
 		
-
-
 		while (window.isOpen())
 		{
 			sf::Event event;
@@ -45,6 +42,7 @@ int main()
 				{
 					window.close();
 					isGameRunning = false;
+					exit(0);
 					return 0;
 				}
 			}

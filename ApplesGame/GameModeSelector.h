@@ -1,10 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Game.h"
+#include "GameMode.h"
 
 namespace ApplesGame
 {
-	struct GameMode;
-
-	void ModeSelect(sf::RenderWindow& window);
+	enum UserGameSettingsBitMask;
+	void ModeSelect(sf::RenderWindow& window, GameMode& gameMode);
 }
-
