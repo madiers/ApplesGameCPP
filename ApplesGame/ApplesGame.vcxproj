@@ -161,7 +161,6 @@
     <ClCompile Include="Apple.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMain.cpp" />
-    <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GameModeSelector.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Obstacle.cpp" />
@@ -171,7 +170,6 @@
     <ClInclude Include="Apple.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameMode.h" />
     <ClInclude Include="GameModeSelector.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Obstacle.h" />

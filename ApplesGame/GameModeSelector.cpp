@@ -5,6 +5,7 @@
 
 namespace ApplesGame
 {
+
 	enum UserGameSettingsBitMask
 	{
 		AcceleratePlayer = 1 << 0,
@@ -74,7 +75,7 @@ namespace ApplesGame
 			{
 				gameMode.firstMode.setFillColor(sf::Color::Red);
 				gameMode.secondMode.setFillColor(sf::Color::White);
-				//gameMode.SetIsInfiniteApple(false);
+				gameMode.SetIsInfiniteApple(false);
 
 				window.draw(gameMode.firstMode);
 			}			
@@ -83,7 +84,7 @@ namespace ApplesGame
 			{
 				gameMode.firstMode.setFillColor(sf::Color::White);
 				gameMode.secondMode.setFillColor(sf::Color::Red);
-				//gameMode.SetIsInfiniteApple(true);
+				gameMode.SetIsInfiniteApple(true);
 
 				window.draw(gameMode.secondMode);
 			}
@@ -93,7 +94,7 @@ namespace ApplesGame
 			{
 				gameMode.thirdMode.setFillColor(sf::Color::Red);
 				gameMode.fourthMode.setFillColor(sf::Color::White);
-				//gameMode.SetisAcceleratable(false);
+				gameMode.SetisAcceleratable(false);
 
 				window.draw(gameMode.thirdMode);
 			}
@@ -103,7 +104,7 @@ namespace ApplesGame
 			{
 				gameMode.thirdMode.setFillColor(sf::Color::White);
 				gameMode.fourthMode.setFillColor(sf::Color::Red);
-				//gameMode.SetisAcceleratable(true);
+				gameMode.SetisAcceleratable(true);
 				
 				window.draw(gameMode.fourthMode);
 			}
